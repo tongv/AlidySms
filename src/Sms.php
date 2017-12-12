@@ -26,14 +26,6 @@ class Sms
     */
     public function __construct()
     {
-    	   //设置短信模板中的字段默认为 number
-           $this->field             = config('sms.field');
-           //设置短信验证码的内容
-           $this->content           = config('sms.content');
-           //初始化短信签名
-           $this->signName          = config('sms.signName');
-           //初始化短信模板编号
-           $this->templateCode      = config('sms.templateCode');
     }
 
     /*
@@ -78,7 +70,7 @@ class Sms
                                 $this->templateCode,       // 短信模板编号
                                 $this->phone,              // 短信接收者
                                 $data,                     // 短信模板中字段的值
-                                "",                        // 流水号
+                                ""                         // 流水号
         );
         //短信发送成功
         if($response->Code =='OK'){
