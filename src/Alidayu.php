@@ -35,10 +35,10 @@ class Alidayu
         $domain = "dysmsapi.aliyuncs.com";
 
         // 暂时不支持多Region
-        $region = "cn-hangzhou";
+        $region = "cn-beijing";
 
         // 服务结点
-        $endPointName = "cn-hangzhou";
+        $endPointName = "cn-beijing";
 
         // 初始化用户Profile实例
         $profile = DefaultProfile::getProfile($region, $accessKeyId, $accessKeySecret);

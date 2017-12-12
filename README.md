@@ -1,8 +1,6 @@
 # AlidySms
 <p>新版阿里大于短信接口的Laravel组件 for Laravel 5.5+ </p>
 
-网址：<a href="https://larashuo.com">larashuo.com</a>
-
 <img src="https://laravip.com/images/alidysms.png">
 
 # 系统要求
@@ -15,7 +13,7 @@ laravel >= 5.5+
 
 # 安装
 ````
-composer require laramall/aliyun-dysms
+composer require tongseo/aliyun-dysms
 ````
 # 设置配置文件
 ````
@@ -56,9 +54,7 @@ Sms::put('phone','13800000000')->send();
 Sms::put('phone',$phone) //接受短信的手机号
    ->put('signName',$signName) //短信签名
    ->put('templateCode',$templateCode) //短信模板编号
-   ->put('filed',$field) //短信模板中的变量字段
-   ->put('content',$content) //短信中的变量的值 也就是验证码的内容
-   ->send(); //发送短信
+   ->send(['code'=>9999]); //发送短信
 
 ````
 

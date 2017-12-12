@@ -70,18 +70,15 @@ class Sms
     |
     |-------------------------------------------------------------------------------
     */
-    public function send()
+    public function send(array $data=array())
     {
         $demo       = new Alidayu(config('sms.ACCESS_KEY_ID'),config('sms.ACCESS_KEY_SECRET'));
         $response   = $demo->sendSms(
                                 $this->signName,           // 短信签名
                                 $this->templateCode,       // 短信模板编号
                                 $this->phone,              // 短信接收者
-                                [                         // 短信模板中字段的值
-                                    $this->field => $this->content,
-                                    "product"=>""
-                                ],
-                                "123"
+                                $data,                     // 短信模板中字段的值
+                                "",                        // 流水号
         );
         //短信发送成功
         if($response->Code =='OK'){
