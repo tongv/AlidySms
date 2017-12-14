@@ -13,18 +13,10 @@ class AlidySmsServiceProvider extends ServiceProvider
      */
     public function boot()
     {   
-
         //发布配置文件
         $this->publishes([
             __DIR__.'/config/sms.php' => config_path('sms.php'),
         ]);
-
-        //添加短信的验证
-        // Validator extensions
-        $this->app['validator']->extend('sms', function($attribute, $value, $parameters)
-        {
-            return (new Sms)->put('phone',request()->phone)->check($value);
-        });
     }
 
     /**

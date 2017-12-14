@@ -17,16 +17,6 @@ class Sms
     protected $signName;
     //短信模板编号
     protected $templateCode;
-	/*
-    |-------------------------------------------------------------------------------
-    |
-    | 构造函数
-    |
-    |-------------------------------------------------------------------------------
-    */
-    public function __construct()
-    {
-    }
 
     /*
     |-------------------------------------------------------------------------------
@@ -41,20 +31,6 @@ class Sms
     	return $this;
     }
 
-
-    /*
-    |-------------------------------------------------------------------------------
-    |
-    | 获取key
-    |
-    |-------------------------------------------------------------------------------
-    */
-    public function sessionKey(){
-
-    	return $this->phone.'_auth_code_'.date('Y-m-d');
-    }
-
-
     /*
     |-------------------------------------------------------------------------------
     |
@@ -64,65 +40,15 @@ class Sms
     */
     public function send(array $data=array())
     {
-        $demo       = new Alidayu(config('sms.ACCESS_KEY_ID'),config('sms.ACCESS_KEY_SECRET'));
-        $response   = $demo->sendSms(
+        $obj       = new Alidayu(config('sms.ACCESS_KEY_ID'),config('sms.ACCESS_KEY_SECRET'));
+        $response   = $obj->sendSms(
                                 $this->signName,           // 短信签名
                                 $this->templateCode,       // 短信模板编号
                                 $this->phone,              // 短信接收者
                                 $data,                     // 短信模板中字段的值
                                 ""                         // 流水号
         );
-        //短信发送成功
-        if($response->Code =='OK'){
-            //把验证码加入到会话中
-            session()->put($this->sessionKey(),$this->content); 
-            return true;
-        }
         //发送失败
-        return false;
+        return $response->Code =='OK';
     }
-
-
-    /*
-    |-------------------------------------------------------------------------------
-    |
-    | 注册成功后  销毁会话中的验证码
-    |
-    |-------------------------------------------------------------------------------
-    */
-    public function destroy(){
-    	session()->forget($this->sessionKey());
-    }
-
-
-    /*
-    |-------------------------------------------------------------------------------
-    |
-    | 获取验证码
-    |
-    |-------------------------------------------------------------------------------
-    */
-    public function getCode(){
-    	if(session()->has($this->sessionKey())){
-    		return session()->get($this->sessionKey());
-    	}
-    	return false;
-    }
-
-    /*
-    |-------------------------------------------------------------------------------
-    |
-    | 检测验证码是否正确
-    |
-    |-------------------------------------------------------------------------------
-    */
-    public function check($code)
-    {
-        if($this->getCode() == $code ){
-            $this->destroy();
-            return true;
-        }
-        return false;
-    }
-
 }
