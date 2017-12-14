@@ -24,6 +24,10 @@ php artisan vendor:publish --provider="LaraMall\AlidySms\AlidySmsServiceProvider
 	'ACCESS_KEY_ID'=>'',
 	//秘钥
 	'ACCESS_KEY_SECRET'=>'',
+	//config 每个操作对应的签名和模版编号
+    'CONFIG'=>[
+        'register'=>['签名','SMS_115928888'],
+    ],
 ````
 
 # 使用
@@ -34,26 +38,7 @@ php artisan vendor:publish --provider="LaraMall\AlidySms\AlidySmsServiceProvider
 use Sms;
 
 //短信发送成功 下面函数返回 true 反之 false
-Sms::put('phone','13800000000')->send();
-
-````
-
-
-# 所有参数完全自定义发送短信模式
-
-````
-Sms::put('phone',$phone) //接受短信的手机号
-   ->put('signName',$signName) //短信签名
-   ->put('templateCode',$templateCode) //短信模板编号
-   ->send(['code'=>9999]); //发送短信
-
-````
-
-//验证短信已写入表单验证规则
-//假设表单中短信验证码的字段为 code
-
-````
-$rules = ['code'=>'required|sms'];
+Sms::sned('13800000000','register',['code'=>'123456']);
 
 ````
 
